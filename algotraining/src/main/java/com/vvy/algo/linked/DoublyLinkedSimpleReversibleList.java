@@ -5,7 +5,7 @@ import java.util.Iterator;
 import com.vvy.algo.list.IterableBack;
 import com.vvy.algo.list.ReversibleList;
 
-public class DoubleSimpleBaseList<E> implements ReversibleList<E>, IterableBack<E>{
+public class DoublyLinkedSimpleReversibleList<E> implements ReversibleList<E>, IterableBack<E>{
 
 	private int size = 0;
 	private Node<E> head;

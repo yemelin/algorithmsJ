@@ -1,7 +1,8 @@
-package com.vvy.algo.linked;
+package com.vvy.algo.list.dummies;
 
 import com.vvy.algo.list.ReversibleList;
 
+/** for test purposes - testing the tests */
 public class DummyReversibleList<E> extends DummyBaseList<E> implements ReversibleList<E> {
 
 	@Override

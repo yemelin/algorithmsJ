@@ -5,15 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
-
-import com.vvy.algo.linked.DoubleSimpleBaseList;
 import com.vvy.algo.linked.SimpleReversibleList;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ReversibleListTest {
 
-//	private ReversibleList<Integer> list = new SimpleReversibleList<>();
-	private ReversibleList<Integer> list = new DoubleSimpleBaseList<>();
+	private ReversibleList<Integer> list = new SimpleReversibleList<>();
+//	private ReversibleList<Integer> list = new DoublyLinkedSimpleReversibleList<>();
 	private int e1,e2,e3,e4;
 	
 	@Before

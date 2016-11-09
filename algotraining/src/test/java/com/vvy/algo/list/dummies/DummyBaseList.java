@@ -1,9 +1,10 @@
-package com.vvy.algo.linked;
+package com.vvy.algo.list.dummies;
 
 import java.util.LinkedList;
 
 import com.vvy.algo.list.BaseList;
 
+/** for test purposes - testing the tests */
 public class DummyBaseList<E> implements BaseList<E> {
 
 	protected LinkedList<E> list = new LinkedList<>();

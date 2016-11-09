@@ -5,11 +5,14 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
-import com.vvy.algo.linked.DoubleSimpleBaseList;
+import com.vvy.algo.linked.DoublyLinkedSimpleReversibleList;
 
+@RunWith(BlockJUnit4ClassRunner.class)
 public class DoublyLinkedListTest {
-	private DoubleSimpleBaseList<Integer> list = new DoubleSimpleBaseList<>();
+	private DoublyLinkedSimpleReversibleList<Integer> list = new DoublyLinkedSimpleReversibleList<>();
 	private int e1, e2, e3, e4;
 
 	@Before
