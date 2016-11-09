@@ -1,6 +1,6 @@
-package com.vvy.algo.list;
+package com.vvy.algo.linked;
 
-import com.vvy.algo.linked.DummyBaseList;
+import com.vvy.algo.list.ReversibleList;
 
 public class DummyReversibleList<E> extends DummyBaseList<E> implements ReversibleList<E> {
 

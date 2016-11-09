@@ -16,7 +16,7 @@ public class SimpleReversibleList<E> extends SimpleBaseList<E> implements Revers
 	public void insert(E e, int position) {
 		if (position==1) {
 			Node<E>node = new Node<>(e);
-			node.next = head.next;
+			node.next = head;
 			head = node;
 			size++;
 			return;
