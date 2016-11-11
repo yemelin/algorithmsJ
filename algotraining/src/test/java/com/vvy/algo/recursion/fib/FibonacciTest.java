@@ -24,7 +24,7 @@ public class FibonacciTest {
 		funcs.add(Fibonacci::dumbRecFib);
 		funcs.add(Fibonacci::fib);
 		funcs.add(Fibonacci::recFibNoMemo);
-//		funcs.add(Fibonacci::recFibMemo);
+		funcs.add(Fibonacci::recFibMemo);
 		
 		data = Arrays.asList(new Object[][] {
 				{0,0l},

@@ -1,14 +1,20 @@
 package com.vvy.algo.recursion.fib;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author vvy
+ */
 
 public class Fibonacci {
-	
+
+/** used in every implementation, thus simplifies the code */
 	private static long base(int n) {
 		return (n<0) ? -1 : n;
 	}
-	
+
+/** iterative version */	
 	public static long fib (int n) {
 		if (n<0)
 			return -1;
@@ -22,11 +28,13 @@ public class Fibonacci {
 		}
 		return sum;
 	}
-	
+
+/** dumb recursion, calculates values multiple times */	
 	public static long dumbRecFib (int n) {	
 		return (n<2) ? base(n) : dumbRecFib(n-1)+dumbRecFib(n-2);
 	}
-	
+
+/** recursion without memoization */	
 	private static long recFibNoMemo (long prev1, long prev2, int n) {
 		return (n>2) ? recFibNoMemo(prev2, prev1+prev2, --n) : prev1+prev2;
 	}
@@ -34,17 +42,17 @@ public class Fibonacci {
 	public static long recFibNoMemo (int n) {
 		return (n<2) ? base(n) : recFibNoMemo(0,1,n);
 	}
-	
-/** not yet implemented */	
-	static List<Long> memo = new ArrayList<Long>();
+
+/** recursion with memoization */	
+	private static Map<Integer, Long> memo = new HashMap<>();
 	public static long recFibMemo(int n) {
-		if (memo.size()>=n+1)
-			return memo.get(n);
-		else if (memo.size()==n) {
-			long ret = memo.get(n-1)+memo.get(n-2);
-			memo.add(ret);
-			return ret;
+		long ret;
+		if (memo.containsKey(n))
+			ret = memo.get(n);		
+		else {
+			ret = (n<2) ? base(n): recFibMemo(n-2)+recFibMemo(n-1);
+			memo.put(n, ret);
 		}
-		else return recFibMemo(n-2)+recFibMemo(n-1);		
+		return ret;
 	}
 }
