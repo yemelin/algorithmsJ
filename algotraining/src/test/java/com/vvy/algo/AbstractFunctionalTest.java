@@ -31,12 +31,4 @@ public abstract class AbstractFunctionalTest <T,R> {
 			}
 		}
 	}
-
-	protected class FuncHolder {
-		Function<T,R> func;
-		String name;
-		public FuncHolder() {
-			// TODO Auto-generated constructor stub
-		}
-	}
 }
