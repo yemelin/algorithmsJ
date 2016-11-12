@@ -21,8 +21,6 @@ public class MaxFinderTest {
 	public MaxFinderTest(List<Integer>list, int max) {
 		this.list = list;
 		this.max = max;
-		System.out.println(list);
-		System.out.println(max);
 	}
 	
 	@Parameters
