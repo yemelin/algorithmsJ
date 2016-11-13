@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.vvy.algo.AbstractConsumerTest;
-import com.vvy.algo.recursion.Sort;
 
 public class SortTest extends AbstractConsumerTest<int[]> {
 
