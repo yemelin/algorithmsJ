@@ -40,10 +40,10 @@ public class Sort {
 	}
 	
 /** merge sort */
-	public static void mergeSortedParts (int[] a, int lo, int mid, int hi) {
-		int i=lo; int j = mid; int k=0;
+	private static void mergeSortedParts (int[] a, int lo, int mid, int hi) {
+		int i=lo; int j = mid+1; int k=0;
 		int[] tmp = new int[hi-lo+1];
-		while (i<mid && j<hi+1) {
+		while (i<mid+1 && j<hi+1) {
 			if (a[i]>a[j]) {
 				tmp[k++] = a[j];
 				j++;
@@ -53,13 +53,13 @@ public class Sort {
 				i++;
 			}
 		}
-		if (i<mid) {
-			System.arraycopy(a, i, a, mid+i, mid-i);
+		if (i<mid+1) {
+			System.arraycopy(a, i, a, lo+k, mid-i+1);
 		}
 		System.arraycopy(tmp, 0, a, lo, k);
 	}
 	
-	public static void mergeSort (int[] a, int lo, int hi) {
+	private static void mergeSort (int[] a, int lo, int hi) {
 		if (lo<hi) {
 			int mid = lo+(hi-lo)/2;
 			
@@ -70,10 +70,15 @@ public class Sort {
 		}
 	}
 	
+	public static void mergeSort (int[] a) {
+		mergeSort(a,0,a.length-1);
+	}
+	
 	public static void main(String[] args) {
 		int[]a = {1,3,5,8,2,4,6,7};
+//		int[]a = {1,3,5,6,4,4,2};
 //		mergeSortedParts(a, 0, 4, 7);
-		mergeSort(a, 0, 7);
+		mergeSort(a, 0, a.length-1);
 		for (int i=0; i<a.length; i++)
 			System.out.print(a[i]+" ");
 		System.out.println();
