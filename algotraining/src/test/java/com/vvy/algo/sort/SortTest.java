@@ -16,7 +16,9 @@ public class SortTest extends AbstractConsumerTest<int[]> {
 		map.put("embedded", Arrays::sort);
 		map.put("bubble", Sort::bubble);
 		map.put("recursive bubble", Sort::bubbleRec);
-		map.put("merge top down", Sort::mergeSort);
+		map.put("merge top down", Sort::mergeSortTD);
+		map.put("merge bottom up", Sort::mergeSortBU);
+		map.put("quickSort", Sort::quickSort);
 		return map;
 	}
 

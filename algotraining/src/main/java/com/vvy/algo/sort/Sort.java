@@ -2,6 +2,12 @@ package com.vvy.algo.sort;
 
 public class Sort {
 
+	private static void printArray(int [] a) {
+		for (int i=0; i<a.length; i++)
+			System.out.print(a[i]+" ");
+		System.out.println();		
+	}
+
 	private static void swap (int[]a, int i, int j) {
 		int tmp = a[i]; a[i] = a[j]; a[j] = tmp;	
 	}
@@ -13,7 +19,6 @@ public class Sort {
 		return (i==a.length-1 || a.length==0);
 	}
 	
-
 /** notorious bubble sort */	
 	public static void bubble(int[] a) {
 		for (int i=0; i<a.length-1; i++) {
@@ -53,34 +58,75 @@ public class Sort {
 				i++;
 			}
 		}
+//add left remainder only, if the right part is bigger, its remainder is already in place		
 		if (i<mid+1) {
 			System.arraycopy(a, i, a, lo+k, mid-i+1);
 		}
 		System.arraycopy(tmp, 0, a, lo, k);
 	}
-	
-	private static void mergeSort (int[] a, int lo, int hi) {
+
+/** merge sort "top down" */	
+	private static void mergeSortTDRec (int[] a, int lo, int hi) {
 		if (lo<hi) {
 			int mid = lo+(hi-lo)/2;
 			
-			mergeSort(a, lo, mid);
-			mergeSort(a, mid+1, hi);
+			mergeSortTDRec(a, lo, mid);
+			mergeSortTDRec(a, mid+1, hi);
 			
 			mergeSortedParts(a, lo, mid, hi);
 		}
 	}
-	
-	public static void mergeSort (int[] a) {
-		mergeSort(a,0,a.length-1);
+
+	public static void mergeSortTD (int[] a) {
+		mergeSortTDRec(a,0,a.length-1);
 	}
 	
+/** merge sort "bottom up */	
+	public static void mergeSortBU(int[] a) {
+		for (int k=1; k<a.length;k*=2) {
+			int lo = 0, mid, hi;
+			while ((mid=lo+k-1)<a.length-1) {
+				hi = Math.min(mid+k,a.length-1);
+				mergeSortedParts(a, lo, mid, hi);
+				lo = hi+1;
+			}
+		}
+	}
+
+/** quickSort from Wiki, naive partitioning */	
+	private static int partition (int[] a, int lo, int hi) {
+		int pivot = a[hi];
+		int i = lo;
+		for (int j=lo; j<hi; j++) {
+			if (a[j]<=pivot) {
+				swap(a, i, j);
+				i++;				
+			}		
+		}
+		swap(a,i,hi);
+		return i;
+	}
+	
+	private static void quickSort(int[] a, int lo, int hi) {
+		if (lo<hi) {
+			int p = partition(a,lo,hi);
+			quickSort(a, lo, p-1);
+			quickSort(a, p+1,hi);
+		}
+	}
+	
+	public static void quickSort(int[] a) {
+		quickSort(a, 0, a.length-1);
+	}
+	
+
 	public static void main(String[] args) {
-		int[]a = {1,3,5,8,2,4,6,7};
-//		int[]a = {1,3,5,6,4,4,2};
+//		int[]a = {1,3,5,8,2,4,6,7};
+		int[]a = {1,3,5,6,4,4,2};
 //		mergeSortedParts(a, 0, 4, 7);
-		mergeSort(a, 0, a.length-1);
-		for (int i=0; i<a.length; i++)
-			System.out.print(a[i]+" ");
-		System.out.println();
+//		mergeSort(a, 0, a.length-1);
+//		mergeSortBU(a);
+		quickSort(a);
+		printArray(a);
 	}
 }
