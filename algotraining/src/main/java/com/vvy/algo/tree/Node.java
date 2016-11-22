@@ -6,18 +6,30 @@ import java.util.List;
 public class Node {
 
 	private List<Node> children;
+	private String value;
+	private static int autoInc = 0;
 
 	public Node(String value) {
-		// TODO Auto-generated constructor stub
+		this.value = value;
+		System.out.println("node: "+value);
 	}
 
 	public Node() {
-		// TODO Auto-generated constructor stub
+		this(Integer.toString(++autoInc));
 	}
 
+	public String getValue() {
+		return value;
+	}
+	
 	public void addNode(Node node) {
 		if (children==null)
 			children = new LinkedList<>();
 		children.add(node);
+	}
+	
+	@Override
+	public String toString() {
+		return value;
 	}
 }
