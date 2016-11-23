@@ -78,6 +78,7 @@ public class DoublyLinkedSimpleReversibleList<E> implements ReversibleList<E>, I
 			}
 			else {
 				head = current.next;
+				//TODO: seems wrong. should it be: current.next.prev=null ?				
 				current.prev=null;
 			}
 			size--;
