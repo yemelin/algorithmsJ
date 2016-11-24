@@ -5,24 +5,32 @@ import java.util.Stack;
 
 public class Newick {
 
+	private int autoInc = -1;
 	private Node root;
-	Node curNode, newNode;
-	Token curToken;
-	Stack<Node> stack = new Stack<>();
+	private Node newNode;
+	private Token curToken;
+	private Stack<Node> stack = new Stack<>();
 	private boolean nameWait = true;
-	
+		
+	private boolean validate(LinkedList<Token> tokens) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	public Node loadTree (LinkedList<Token> tokens) {
+		if (!validate(tokens))
+			return null;
 		//init
 		curToken =tokens.getLast();
 		root = newNode = (curToken.type==Token.NAME) ?
-				new Node(tokens.removeLast().value) : new Node();
+				new Node(tokens.removeLast().value) : new Node(Integer.toString(++autoInc));
 		nameWait = false;
 		
 		do {
 			if (nameWait) {
 				curToken=tokens.getLast(); //look ahead
 				newNode = (curToken.type==Token.NAME) ?
-						new Node(tokens.removeLast().value) : new Node();
+						new Node(tokens.removeLast().value) : new Node(Integer.toString(++autoInc));
 				stack.peek().addNode(newNode);
 				nameWait = false;
 			}
@@ -42,6 +50,8 @@ public class Newick {
 	
 	public static void main(String[] args) {
 		String newick = "((b,),)a";		
-		Node node = new Newick().loadTree(Tokenizer.tokenize(newick));
+		new Newick().loadTree(Tokenizer.tokenize(newick));
+		newick = "((,,(),,),(,,))";
+		new Newick().loadTree(Tokenizer.tokenize(newick));
 	}
 }

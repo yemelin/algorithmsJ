@@ -32,4 +32,12 @@ public class Node {
 	public String toString() {
 		return value;
 	}
+
+	public List<Node> getChildren() {
+		return children;
+	}
+
+	public boolean isLeaf() {
+		return (children==null || children.isEmpty());
+	}
 }
