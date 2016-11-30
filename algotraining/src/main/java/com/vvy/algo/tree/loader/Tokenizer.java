@@ -1,4 +1,4 @@
-package com.vvy.algo.tree;
+package com.vvy.algo.tree.loader;
 
 import java.util.LinkedList;
 

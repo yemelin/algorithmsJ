@@ -1,8 +1,8 @@
-package com.vvy.algo.tree.processors;
+package com.vvy.algo.tree.consumers;
 
 import java.util.function.Consumer;
 
-import com.vvy.algo.tree.Node;
+import com.vvy.algo.tree.node.Node;
 
 public class NodeValuePrinter<T> implements Consumer<Node<T>> {
 

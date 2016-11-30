@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Stack;
 import java.util.function.Consumer;
 
+import com.vvy.algo.tree.consumers.NodeBSChecker;
+import com.vvy.algo.tree.consumers.NodeBinaryChecker;
+import com.vvy.algo.tree.consumers.NodeValuePrinter;
+import com.vvy.algo.tree.loader.Newick;
+import com.vvy.algo.tree.loader.Tokenizer;
+import com.vvy.algo.tree.node.Node;
 import com.vvy.algo.tree.processors.DepthCountingProcessor;
-import com.vvy.algo.tree.processors.NodeBSChecker;
-import com.vvy.algo.tree.processors.NodeBinaryChecker;
-import com.vvy.algo.tree.processors.NodeValuePrinter;
 import com.vvy.algo.tree.processors.RecursionProcessor;
 
 public class Util {

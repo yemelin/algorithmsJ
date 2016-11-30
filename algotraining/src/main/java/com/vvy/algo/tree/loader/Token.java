@@ -1,4 +1,4 @@
-package com.vvy.algo.tree;
+package com.vvy.algo.tree.loader;
 
 public class Token {
 	public static final int LB=0, RB=1, COMMA=2, NAME=3; 

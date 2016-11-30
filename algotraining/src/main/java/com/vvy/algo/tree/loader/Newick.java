@@ -1,8 +1,10 @@
-package com.vvy.algo.tree;
+package com.vvy.algo.tree.loader;
 
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.function.Function;
+
+import com.vvy.algo.tree.node.Node;
 
 public class Newick {
 

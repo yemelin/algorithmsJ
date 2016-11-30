@@ -1,6 +1,6 @@
 package com.vvy.algo.tree.processors;
 
-import com.vvy.algo.tree.Node;
+import com.vvy.algo.tree.node.Node;
 
 public interface RecursionProcessor<T> {
 	void onEnter(Node<T> node);
