@@ -11,7 +11,7 @@ public class Node {
 
 	public Node(String value) {
 		this.value = value;
-		System.out.println("node: "+value);
+//		System.out.println("node: "+value);
 	}
 
 	public Node() {
