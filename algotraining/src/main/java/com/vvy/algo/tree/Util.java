@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.function.Consumer;
 
 import com.vvy.algo.tree.processors.DepthCountingProcessor;
+import com.vvy.algo.tree.processors.NodeBSChecker;
 import com.vvy.algo.tree.processors.NodeBinaryChecker;
 import com.vvy.algo.tree.processors.NodeValuePrinter;
 import com.vvy.algo.tree.processors.RecursionProcessor;
@@ -13,11 +14,11 @@ import com.vvy.algo.tree.processors.RecursionProcessor;
 public class Util {
 
 	/** breadth first */
-	public static void traverseBFS(Node node, Consumer<Node>action) {
-		LinkedList<Node> queue = new LinkedList<>();
+	public static <T> void traverseBFS(Node<T> node, Consumer<Node<T>>action) {
+		LinkedList<Node<T>> queue = new LinkedList<>();
 		queue.add(node); //enqueue root
 		while (!queue.isEmpty()) {
-			Node next = queue.pollFirst(); //dequeue
+			Node<T> next = queue.pollFirst(); //dequeue
 			action.accept(next);
 			if (!next.isLeaf()) {
 				queue.addAll(next.getChildren()); //enqueue children
@@ -26,37 +27,37 @@ public class Util {
 	}
 	
 	/** depth first */
-	public static void traverseDFS(Node node, Consumer<Node>action) {
+	public static <T> void traverseDFS(Node<T> node, Consumer<Node<T>>action) {
 		action.accept(node);
 		if (!node.isLeaf()) {
-			for (Node t: node.getChildren())
+			for (Node<T> t: node.getChildren())
 				traverseDFS(t, action);
 		}
 	}	
 	
 	/** stack-based non-recursive DFS */
-	public static void traverseDFSWithStack(Node node, Consumer<Node>action) {
-		Stack<Node> stack = new Stack<>();
+	public static <T> void traverseDFSWithStack(Node<T> node, Consumer<Node<T>>action) {
+		Stack<Node<T>> stack = new Stack<>();
 		stack.push(node);
 		while (!stack.isEmpty()) {
-			Node curNode = stack.pop();
+			Node<T> curNode = stack.pop();
 			action.accept(curNode);
 			if (!curNode.isLeaf())
-				for (Node child : curNode.getChildren())
+				for (Node<T> child : curNode.getChildren())
 					stack.push(child);
 		}
 	}
 		
-	public static boolean treeIsBinary(Node node) {
-		NodeBinaryChecker checker = new NodeBinaryChecker(); 
+	public static <T> boolean treeIsBinary(Node<T> node) {
+		NodeBinaryChecker<T> checker = new NodeBinaryChecker<>(); 
 		traverseDFS(node, checker);
 		return checker.getFoundNodes().isEmpty();
 	}
 	
-	public static void processDFS(Node node, RecursionProcessor proc) {
+	public static<T> void processDFS(Node<T> node, RecursionProcessor<T> proc) {
 		proc.onEnter(node);
 		if (!node.isLeaf()) {
-			for (Node t: node.getChildren())
+			for (Node<T> t: node.getChildren())
 				processDFS(t, proc);
 		}
 		proc.onExit(node);
@@ -67,14 +68,14 @@ public class Util {
 		int height;
 	}
 	
-	public static BalanceInfo balanceInfo (Node node) {
+	public static <T>BalanceInfo balanceInfo (Node<T> node) {
 		BalanceInfo ret = new BalanceInfo();
 		if (node.isLeaf()) {
 			ret.height = 1;
 			ret.balanced = true;
 			return ret;
 		}
-		List<Node> children = node.getChildren();
+		List<Node<T>> children = node.getChildren();
 		BalanceInfo left = balanceInfo(children.get(0));
 		BalanceInfo right;
 		if (children.size()>1)
@@ -94,17 +95,19 @@ public class Util {
 		String t = "((,,(),,),(,,))";
 		String t2 = "(((8,(10,11)9)4,5)2,(6,7)3)1";
 		String t3 = "(((),),(,))";
-		Node tree = new Newick().loadTree(Tokenizer.tokenize(t));
+		String bs = "((9,6)8,(4,(1)2)3)5";
+//		String bs = "(8,3)5";
+		Node<Integer> tree = new Newick().loadTree(Tokenizer.tokenize(t));
 //		traverseBFS(tree, System.out::print);
-		traverseBFS(tree, new NodeValuePrinter());
+		traverseBFS(tree, new NodeValuePrinter<>());
 		System.out.println();
-		traverseDFS(tree, new NodeValuePrinter());
+		traverseDFS(tree, new NodeValuePrinter<>());
 		System.out.println();
 		
 		tree = new Newick().loadTree(Tokenizer.tokenize(t2));
 		System.out.println(treeIsBinary(tree));
 		
-		RecursionProcessor depthCounter = new DepthCountingProcessor();
+		RecursionProcessor<Integer> depthCounter = new DepthCountingProcessor<>();
 		processDFS(tree, depthCounter);
 		System.out.println(depthCounter.getResult());
 		
@@ -114,5 +117,19 @@ public class Util {
 		tree = new Newick().loadTree(Tokenizer.tokenize(t3));
 		info = balanceInfo(tree);
 		System.out.println(info.height+" "+info.balanced);
+		
+		System.out.println("======= BS check =========");
+		System.out.println(treeIsBinary(tree));
+		NodeBSChecker<Integer> checker = new NodeBSChecker<>(); 
+		traverseDFS(tree, checker);
+		System.out.println(checker.getFoundNodes());
+		
+		tree = new Newick().loadTree(Tokenizer.tokenize(bs));
+		System.out.println("======= BS check =========");
+		System.out.println(treeIsBinary(tree));
+		checker = new NodeBSChecker<>(); 
+		traverseDFS(tree, checker);
+		System.out.println(checker.getFoundNodes());
+
 	}
 }

@@ -2,12 +2,12 @@ package com.vvy.algo.tree.processors;
 
 import com.vvy.algo.tree.Node;
 
-public class DepthCountingProcessor implements RecursionProcessor{
+public class DepthCountingProcessor<T> implements RecursionProcessor<T>{
 	private int recursionDepth = 0;
 	private int maxDepth = 0;
 
 	@Override
-	public void onEnter(Node node) {
+	public void onEnter(Node<T> node) {
 		recursionDepth++;
 		System.out.println("node:"+node.getValue()+", depth:"+recursionDepth);
 		if (node.isLeaf() && recursionDepth>maxDepth)
@@ -15,7 +15,7 @@ public class DepthCountingProcessor implements RecursionProcessor{
 	}
 
 	@Override
-	public void onExit(Node node) {
+	public void onExit(Node<T> node) {
 		recursionDepth--;		
 	}
 

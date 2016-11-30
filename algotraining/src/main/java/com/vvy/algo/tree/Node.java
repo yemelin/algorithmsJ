@@ -1,28 +1,24 @@
 package com.vvy.algo.tree;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Node {
+public class Node<T> {
 
-	private List<Node> children;
-	private String value;
-	private static int autoInc = 0;
+	protected List<Node<T>> children;
+	private T value;
 
-	public Node(String value) {
+	public Node(T value) {
 		this.value = value;
-//		System.out.println("node: "+value);
+		System.out.println("node: "+value);
 	}
 
-	public Node() {
-		this(Integer.toString(++autoInc));
-	}
-
-	public String getValue() {
+	public T getValue() {
 		return value;
 	}
 	
-	public void addNode(Node node) {
+	public void addNode(Node<T> node) {
 		if (children==null)
 			children = new LinkedList<>();
 		children.add(node);
@@ -30,14 +26,14 @@ public class Node {
 	
 	@Override
 	public String toString() {
-		return value;
+		return value.toString();
 	}
 
-	public List<Node> getChildren() {
-		return children;
+	public List<Node<T>> getChildren() {
+		return (children==null)? null:Collections.unmodifiableList(children);
 	}
 
 	public boolean isLeaf() {
-		return (children==null || children.isEmpty());
+		return (getChildren()==null || getChildren().isEmpty());
 	}
 }

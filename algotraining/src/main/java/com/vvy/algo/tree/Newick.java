@@ -2,6 +2,7 @@ package com.vvy.algo.tree;
 
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.function.Function;
 
 public class Newick {
 
@@ -18,19 +19,23 @@ public class Newick {
 	}
 
 	public Node loadTree (LinkedList<Token> tokens) {
+		return loadTree(tokens, Node::new);
+	}
+	
+	public Node loadTree (LinkedList<Token> tokens, Function<String,Node> factory) {
 		if (!validate(tokens))
 			return null;
 		//init
 		curToken =tokens.getLast();
 		root = newNode = (curToken.type==Token.NAME) ?
-				new Node(tokens.removeLast().value) : new Node(Integer.toString(++autoInc));
+				factory.apply(tokens.removeLast().value) : factory.apply(Integer.toString(++autoInc));
 		nameWait = false;
 		
 		do {
 			if (nameWait) {
 				curToken=tokens.getLast(); //look ahead
 				newNode = (curToken.type==Token.NAME) ?
-						new Node(tokens.removeLast().value) : new Node(Integer.toString(++autoInc));
+						factory.apply(tokens.removeLast().value) : factory.apply(Integer.toString(++autoInc));
 				stack.peek().addNode(newNode);
 				nameWait = false;
 			}
