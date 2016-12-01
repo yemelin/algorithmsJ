@@ -4,13 +4,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import com.vvy.algo.tree.consumers.NodeBSChecker;
-import com.vvy.algo.tree.consumers.NodeBinaryChecker;
+import com.vvy.algo.tree.consumers.NodeCollector;
 import com.vvy.algo.tree.consumers.NodeValuePrinter;
 import com.vvy.algo.tree.loader.Newick;
 import com.vvy.algo.tree.loader.Tokenizer;
+import com.vvy.algo.tree.node.BinaryNode;
 import com.vvy.algo.tree.node.Node;
+import com.vvy.algo.tree.node.NodeUtil;
 import com.vvy.algo.tree.processors.DepthCountingProcessor;
 import com.vvy.algo.tree.processors.RecursionProcessor;
 
@@ -51,11 +54,17 @@ public class Util {
 		}
 	}
 		
-	public static <T> boolean treeIsBinary(Node<T> node) {
-		NodeBinaryChecker<T> checker = new NodeBinaryChecker<>(); 
-		traverseDFS(node, checker);
-		return checker.getFoundNodes().isEmpty();
+//	public static <T> boolean treeIsBinary(Node<T> node) {
+//		NodeBinaryChecker<T> checker = new NodeBinaryChecker<>(); 
+//		traverseDFS(node, checker);
+//		return checker.getFoundNodes().isEmpty();
+//	}
+//	
+	public static <T> boolean treeIsBinary(Node<T> root) {
+		return collectNodesOnCondition(root, NodeUtil::nodeIsNotBinary).isEmpty();
 	}
+	
+	
 	
 	public static<T> void processDFS(Node<T> node, RecursionProcessor<T> proc) {
 		proc.onEnter(node);
@@ -93,6 +102,29 @@ public class Util {
 		return ret;
 	}
 	
+	public static <T> List<Node<T>> collectNodesOnCondition (Node<T> root, Predicate<Node<T>> condition) {
+		NodeCollector<T> collector = new NodeCollector<>(condition);
+		traverseDFS(root, collector);
+		return collector.getFoundNodes();		
+	}
+	
+	public static<T extends Comparable<T>> List<Node<T>> searchBSTForLowerThan (Node<T> root, T value) {
+		List<Node<T>> ret = new LinkedList<>();
+		while (root!=null) {
+			BinaryNode<T> bstRoot = NodeUtil.toBinaryNode(root);
+			if (root.getValue().compareTo(value)<0) {
+				ret.add(root);
+				if (bstRoot.getLeft()!=null) {
+					ret.addAll(collectNodesOnCondition(bstRoot.getLeft(), node->true));
+				}
+				root = bstRoot.getRight();
+			}
+			else {
+				root = bstRoot.getLeft();
+			}
+		}
+		return ret;
+	}
 	
 	public static void main(String[] args) {
 		String t = "((,,(),,),(,,))";
